@@ -229,10 +229,10 @@ def deep_network():
     sqt.compile(loss='mse', optimizer='Adam')
     return sqt
 ```
-#### 은닉층이 2개인 다층 퍼셉트론을 만들어 반환하는 함수이다.
-#### `sqt.add(Dense(32,input_dim=env.observation_space.shape[0], activation='relu'))`여기에서 input_dim 매개 변수를 env.observation_space로 설정하였다. 이 문제를 위한 입력벡터(수레위치, 수레 속도, 막대 각도, 막대 각속도)의 정보가 env.observation_space.shape[0]에 들어 있다. 
+은닉층이 2개인 다층 퍼셉트론을 만들어 반환하는 함수이다.
+`sqt.add(Dense(32,input_dim=env.observation_space.shape[0], activation='relu'))`여기에서 input_dim 매개 변수를 env.observation_space로 설정하였다. 이 문제를 위한 입력벡터(수레위치, 수레 속도, 막대 각도, 막대 각속도)의 정보가 env.observation_space.shape[0]에 들어 있다. 
 
-#### `sqt.add(Dense(env.action_space.n, activation='linear'))` 여기서도  첫번째 매개변수는 출력 벡터의 크기인데, 이 정보도 env.action_space.n에 들어있다. 또한 활성함수를 linear로 설정한 이유는 누적 보상을 출력해야 하기 때문이다. 만약에 softmax로 바꾸면 [0,1]사이의 확률값으로 변환하므로 누적 보상액을 제대로 추정하지 못한다고 한다.
+`sqt.add(Dense(env.action_space.n, activation='linear'))` 여기서도  첫번째 매개변수는 출력 벡터의 크기인데, 이 정보도 env.action_space.n에 들어있다. 또한 활성함수를 linear로 설정한 이유는 누적 보상을 출력해야 하기 때문이다. 만약에 softmax로 바꾸면 [0,1]사이의 확률값으로 변환하므로 누적 보상액을 제대로 추정하지 못한다고 한다.
 
 ### **DQN 학습 함수 만들기**
 ```
