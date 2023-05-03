@@ -47,7 +47,7 @@ while True:
     score += 1
     time.sleep(0.1)
 ```
-스스로 개임을 했더니 다섯번 평균 점수가 7.5점이었다. 시작 하자마자 거의 바로 죽었다.
+스스로 게임을 했더니 다섯번 평균 점수가 7.5점이었다. 시작 하자마자 거의 바로 죽었다.
 
 
 ### **DQN 아이디어**
@@ -65,7 +65,8 @@ Keras-RL2는 Keras를 사용하여 강화학습을 구현할 수 있도록 지�
 
 
 ### **필수적인 라이브러리 불러오기**
-```import gym
+```
+import gym
 import random
 import numpy as np
 import tensorflow
