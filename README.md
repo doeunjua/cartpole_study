@@ -2,7 +2,8 @@
 # **cartpole 공부 과정**
 ### **직접 카트폴 운전해보기 코드**
  
-```import gymnasium as gym
+```python
+import gymnasium as gym
 import time
 
 action = 0
@@ -65,7 +66,7 @@ Keras-RL2는 Keras를 사용하여 강화학습을 구현할 수 있도록 지�
 
 
 ### **필수적인 라이브러리 불러오기**
-```
+```python
 import gym
 import random
 import numpy as np
@@ -81,14 +82,14 @@ dense:인공신경망의 fully connected layer를 만들어주는 라이브러�
 flatten: 추출된 주요 특징을 fully connected layer에 전달하기 위해 1차원 자료로 바꿔주는 layer 라이브러리
 
 ### **env**
-```
+```python
 env = gym.make('CartPole-v1')
 states = env.observation_space.shape[0]
 actions = env.action_space.n
 ```
 states는 4이고, anction은 2이다.(left or right)
 ### **10회 실행**
-```
+```python
 episodes = 10
 for episode in range(1, episodes+1):
     state = env.reset()
@@ -127,7 +128,8 @@ Episode:10 Score:18.0
 
 ### **인공지능 모델 만들기**
  flatten layer 1층, dense layer 3층 이렇게 총 4층 layer를 만들거임.
- ```def build_model(states, actions):
+ ```python
+ def build_model(states, actions):
     model = tensorflow.keras.Sequential()
     model.add(Flatten(input_shape=(1,states)))
     model.add(Dense(24, activation='relu'))
@@ -173,7 +175,8 @@ nb_steps_warmup은 파라미터가 너무 진동하는 것을 방지하기 위�
 target_model_update=1e-2은 얼마나 자주 타겟 모델을 업데이트 할것인가를 나타내 준다.
 
 ### **DQN 알고리즘 정의해주고, fitting**
-```dqn = build_agent(build_model(states, actions), actions)
+```python
+dqn = build_agent(build_model(states, actions), actions)
 dqn.compile(Adam(lr=1e-3), metrics=['mae'])
 dqn.fit(env, nb_steps=50000, visualize=False, verbose=1)
 
@@ -187,7 +190,7 @@ print(np.mean(scores.history['episode_reward']))
 
 ## **다른 방법으로 시작**
 ### **라이브러리 임포트**
-```
+```python
 import numpy as np
 import random
 import gym
@@ -200,7 +203,7 @@ from collections import deque
 `from collections import deque` 
 :deque는 양방향 큐 이다. 앞, 뒤 모든 방향에서 원소를 추가, 제거 가능(double-ended queue의 약자)
 ### **학습을 위한 파라미터**
-```
+```python
 studyrate=0.9 
 discount_rate=0.99 
 eps=0.9 
@@ -221,7 +224,7 @@ n_episode=100
 -n_episode: 학습에 사용할 에피소드 개수
 
 ### **신경망 설계함수 만들기**
-```
+```python
 def deep_network():
     sqt=Sequential()
     sqt.add(Dense(32,input_dim=env.observation_space.shape[0], activation='relu'))
@@ -236,7 +239,7 @@ def deep_network():
 `sqt.add(Dense(env.action_space.n, activation='linear'))` 여기서도  첫번째 매개변수는 출력 벡터의 크기인데, 이 정보도 env.action_space.n에 들어있다. 또한 활성함수를 linear로 설정한 이유는 누적 보상을 출력해야 하기 때문이다. 만약에 softmax로 바꾸면 [0,1]사이의 확률값으로 변환하므로 누적 보상액을 제대로 추정하지 못한다고 한다.
 
 ### **DQN 학습 함수 만들기**
-```
+```python
 def model_learning():
     mini_batch=np.asarray(random.sample(D, batch_siz))
     state= np.asarray([mini_batch[i,0] for i in range(batch_siz)])
